@@ -1,0 +1,231 @@
+* See differences between two files
+diff corona.csv corona2.csv
+or diff -u corona.csv corona2.csv
+
+ * Graphical tool to see changes of files side by side
+meld, KDiff3, vimdiff
+
+* Save change of two files into a new file
+diff -u corona.csv corona2.csv >corona.diff
+
+** Apply change to old file (corona.csv)
+patch corona.csv < corona2.diff
+
+*Config
+git config --global user.email almahmud.sbi@gmail.com
+git config --global user.name "mahmud"
+
+** See config
+git config --list
+git config user.name
+git config user.email
+
+** Initiate a git repo
+git init
+
+** See the file
+ls -la
+ls -l .git/
+
+** Add a file to git
+git add git.txt
+
+** Current working tree
+git status
+
+** Make a commit
+git commit ## Write message manually in the first line
+
+** Tracked files are three types
+Modified: Made changes, did not commit
+Staged: Ready to be Commited
+Commited: commit
+
+** All files to track must be in git repo
+
+** Check current config
+git config -l
+
+** Good commit messages
+First line: 50 char summary
+then: description (72 char in each line)
+Add more para if needed, e.g., bugs, links.
+
+** See log
+git log
+
+** Skip staging
+
+git commit -a is a short code for git add | git commit < NOT TRUE
+
+git commit -a is a shortcut to stage any changes to tracked files and commit
+#them in one step. New files are not added.
+
+** Head is like a bookmark
+
+** See patch
+git log -p
+
+** See git by id
+git log
+git show commit_id
+
+** Stat of changes
+git log --stat
+
+** See changes before commit
+git diff ## By default, unstaged changes.
+git diff --staged ## Staged changes
+
+** Let git show changes before asking to add
+git add -p
+
+** Remove a file from git directory.
+ls -l
+git rm file_name
+ls -l
+git status
+git commit -m "Delete the unneeded file"
+
+** Rename files
+git mv oldname newname
+
+Ignore auto-generated files by, say, os.
+echo .DS_STORE>.gitignore
+ls -la
+
+** In a Unix-like file system dot prefix indicates that the file or directory
+#is hidden and won't show up when you do the normal directory listing.
+That's why we have to use ls-la to see all files.
+
+** Go to latest snapshot (if still unstaged; not used add command)
+atom corona.csv
+git status
+git checkout corona.csv ## Actual command to revert change. It reverts changes
+#to modified files before they are staged.
+git status
+tail corona.csv
+
+** Revert if already staged
+git add * ## Add all modified files to staging area.
+# Some might require reversion.
+git reset git.txt ## Kind of unadd
+git reset -p ## Specific change
+
+** Amend commit
+## It's good to use separate message in git commit for separate files.
+git commit --amend ## Don't use on public commit. Use on locals. This edits
+#commit message, not actual commit
+
+## Rollback
+So git revert will create a new commit, that is the opposite of everything in
+# the given commit.
+We can revert the latest commit by using the head alias. Since we can think of
+# head as a pointer to the snapshot of your current commit, when we pass head
+#to the revert command we tell Git to rewind that current commit.
+
+atom tm.csv
+git commit -a -m 'Add a wrong line for testing purpose.'
+git commit -a -m "Commit for test."
+git revert HEAD ##Then type message, like "Reason for rollback: Just a test"
+
+git log -p -2 ## P for patch (last 2 entries) created by the command
+
+With git revert, a new commit is created with inverse changes. This cancels
+ previous changes instead of making it as though the original commit never
+ #happened.
+
+** Revert to much earlier commits
+Commit id is 40 char long; this id called HASH, calculated using algorithm SHA1
+git log -2 ## Last two commits
+git show bd24f2f11e7f40e362c90cc958104c162e283ec5 ## See commit by id.
+git revert a06d2877400d2b73fc8813b941e93ca530661614 ##undo this id's commit
+
+Branch: Pointer to a particular commit. Independent work. Defaut branch is
+#called master. Branch makes it easy to experiment.
+
+git branch ## List, create, delete, or manipulate branches
+git branch solo # Create the branch named solo.
+# Master branch is asterisked.
+git checkout ##Check out latest spanpshot for both files and
+# branches.
+git checkout solo # Switch to branch solo
+git branch
+git checkout -b better-solo #Create and switch to better-solo
+
+# Changing within one branch does not affect master or other branches.
+git checkout master #Switch back to masetr
+# Files created in solo branch are not available.
+
+git branch -d tmp # Delete branch tmp. We should ensure to merge first.
+git branch ## See which branch we are in now; go to master.
+git merge better-solo #Fast-forward merge
+
+# Git uses two different algorithms to perform a merge: fast-forward
+#and three-way merge.
+
+#three-way merge: if master branch has a commit after creating other branch.
+#So changes are not linear.
+# After merging we can delete the branch that is merged.
+git branch -d better-solo
+
+# Merge conflicts in branch that can arise.
+# It happens when two branches change same part of same file.
+
+git status # When conflicts happen, check status.
+# Then fix conflicts manually
+git commit # Special commit after fixing conflict.
+git log --graph --oneline ## history and merges of commits.
+
+git merge --abort ## Stop merge and reset files in working tree before #
+# the merge ever happened.
+
+## Github
+## Distributed means that each developer has a copy of the whole
+##repository on their local machine.
+## Alternatives: BitBucket, GitLab
+
+## Steps
+## Create a repository > Make a local copy > Clone >
+git clone https://github.com/mahmudstat/academy.git
+
+## > Change to repo directory and see what's in there.
+cd academy/
+ls -l
+atom README.md
+## > Commiit
+git commit -a -m "Add what this repo will do."
+## > Push this to remote repo (Github)
+git push
+git config --global credential.helper cache ## Save credential for 15 making
+git pull ## Retrieve new changes from remote repo.
+
+## https://docs.github.com/en/github/authenticating-to-github/connecting-to-github-with-ssh
+## Use SSH key to not have to login each time
+
+## Protocols
+## http gives generally read-only access to repo to others.
+## People can clone but not push
+## https and ssh provide method of authenticating users.
+
+## See configuration of remote (cloned repo)
+git remote -v
+git remote show origin
+git branch -r # Remote branches being tracked. read-only
+
+## Fetch
+git remote show origin
+git fetch ## Get remote updates
+git checkout ## See working tree
+git log origin/master ## Current commits in the remote repo
+git status ## See whether local is behind
+git merge origin/master ## Merge with remote repo
+
+
+## Pull: Both fetch and merge
+git pull
+git remote show origin
+git checkout branch_name # if meanwhile there's a new bracnh
+git remote update ## Fetch cntents of all remote branches
+##
+git remote update ## Fetch all remote branch, not merge
