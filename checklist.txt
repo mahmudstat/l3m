@@ -1,0 +1,4 @@
+* Correct spelling
+* Add wavelength image
+* Add সময় কেন পেছনে চলে না? 
+* Remove evo
