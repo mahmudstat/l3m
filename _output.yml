@@ -5,7 +5,7 @@ bookdown::gitbook:
       before: |
         <li><a href="./">লাস্ট থ্রি মিনিটস</a></li>
       after: |
-        <li><a href="https://github.com/mahmudstat/l3m" target="blank">Published with bookdown</a></li>
+        <li><a href="https://github.com/mahmudstat/l3m" target="blank">R প্রোগ্রামিং এর বুকডাউন প্যাকেজের সাহায্যে প্রকাশিত।</a></li>
     edit: https://github.com/mahmudstat/l3m/edit/master/%s
     download: ["pdf", "epub"]
 bookdown::pdf_book:
