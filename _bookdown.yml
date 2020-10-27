@@ -1,9 +1,9 @@
 book_filename: "l3m"
 language:
   ui:
-    chapter_name: "অধ্যায়"
+    chapter_name: "অধ্যায় "
 delete_merged_file: true
 output_dir: "docs"
-chapter_name: "অধ্যায়"
+chapter_name: "অধ্যায় "
 repo: https://github.com/mahmudstat/l3m
 new_session: yes
