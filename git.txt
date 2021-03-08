@@ -141,6 +141,12 @@ git log -2 ## Last two commits
 git show bd24f2f11e7f40e362c90cc958104c162e283ec5 ## See commit by id.
 git revert a06d2877400d2b73fc8813b941e93ca530661614 ##undo this id's commit
 
+<<<<<<< HEAD
+=======
+# reset or revert a file to a specific revision?
+git checkout c5f567 -- file1/to/restore file2/to/restore
+
+>>>>>>> 9d18d68ab0962ba96fec9238ff619944f954fc9a
 Branch: Pointer to a particular commit. Independent work. Defaut branch is
 #called master. Branch makes it easy to experiment.
 
